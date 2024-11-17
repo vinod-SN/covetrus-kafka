@@ -34,7 +34,7 @@ namespace Company.Function
 
         public   void Generateembedding(string text){
             // const  string apiendpoint = "https://api.openai.com/v1/embeddings";
-            const string apikey = "sk-proj-gXVsbQiiiPeMeThNPiuwT3BlbkFJlC6fxYNSp1UG37UAXaFY";
+            var  apikey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
             const string model = "text-embedding-3-large";
             var client = new OpenAIClient(apiKey:apikey);
             var res = client.GetEmbeddingClient(model:model);
