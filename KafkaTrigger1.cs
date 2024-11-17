@@ -14,7 +14,7 @@ namespace Company.Function
         // "KafkaPassword":"{EVENT_HUBS_CONNECTION_STRING}
         [FunctionName("KafkaTrigger1")]
         public void Run(
-            [KafkaTrigger("example_APPSETTING",
+            [KafkaTrigger("172.210.56.1",
                           "TutorialTopic",
                           AuthenticationMode = BrokerAuthenticationMode.Plain,
                           ConsumerGroup = "$Default")] KafkaEventData<string>[] events,
