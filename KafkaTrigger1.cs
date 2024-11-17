@@ -1,6 +1,10 @@
+using System;
+using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Kafka;
 using Microsoft.Extensions.Logging;
+using OpenAI;
+using OpenAI.Embeddings;
 
 namespace Company.Function
 {
@@ -23,7 +27,24 @@ namespace Company.Function
             foreach (KafkaEventData<string> eventData in events)
             {
                 log.LogInformation($"C# Kafka trigger function processed a message: {eventData.Value}");
+                Generateembedding(eventData.Value);
+
             }
+        }
+
+        public   void Generateembedding(string text){
+            // const  string apiendpoint = "https://api.openai.com/v1/embeddings";
+            const string apikey = "sk-proj-gXVsbQiiiPeMeThNPiuwT3BlbkFJlC6fxYNSp1UG37UAXaFY";
+            const string model = "text-embedding-3-large";
+            var client = new OpenAIClient(apiKey:apikey);
+            var res = client.GetEmbeddingClient(model:model);
+            EmbeddingGenerationOptions options = new() { Dimensions = 1536};
+            var response = res.GenerateEmbedding(text,options);
+           Console.WriteLine($"Embedding generated: {response}");
+
+
+
+
         }
     }
 }
